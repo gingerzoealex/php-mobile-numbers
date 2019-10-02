@@ -39,6 +39,17 @@ class MobileNumberLookup{
 
 $checkNumber = new MobileNumberLookup();
 // $checkNumber->validate_number('(+44)07904787677');
+$val = getopt(null, ["phone_number:"]);
+if ($val !== false) {
+	echo var_export($val, true);
+  foreach($val as $number){
+    $checkNumber->validate_number($number);
+  }
+}
+else {
+	echo "Could not get value of command line option\n";
+}
+
 // $checkNumber->validate_number('(+44)07890000000');
 // $checkNumber->validate_number('(+44)07890000000');
-$checkNumber->validate_number('(+44)02891273002');
+// $checkNumber->validate_number('(+44)02891273002');
