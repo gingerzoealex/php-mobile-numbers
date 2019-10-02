@@ -7,34 +7,22 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Twilio API Team",
-            "email": "api@twilio.com"
+            "name": "Kevin Burke",
+            "email": "kevin@twilio.com"
+        },
+        {
+            "name": "Kyle Conroy",
+            "email": "kyle+pear@twilio.com"
         }
     ],
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=5.2.1"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^6.3",
-        "apigen/apigen": "^4.1",
-        "phpunit/phpunit": "^7.5"
-    },
-    "suggest": {
-        "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+        "mockery/mockery": ">=0.7.2",
+        "phpunit/phpunit": "4.5.*"
     },
     "autoload": {
-        "psr-4": {
-            "Twilio\\": "src/Twilio/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Twilio\\Tests\\": "tests/Twilio/"
-        }
-    },
-    "config": {
-        "platform": {
-            "php": "7.1.30"
-        }
+        "files": ["Services/Twilio.php"]
     }
 }

@@ -4,38 +4,34 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0033c16a86f25625bcdbf4de980ddcf",
+    "content-hash": "60be227d91b329daf95617e301d79da5",
     "packages": [
         {
             "name": "twilio/sdk",
-            "version": "5.36.0",
+            "version": "4.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "ad4093a19762b76b1ec316ebdb6e0766539859ff"
+                "reference": "0a88c48262fbee1c3841f721f46439d3de450b95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/ad4093a19762b76b1ec316ebdb6e0766539859ff",
-                "reference": "ad4093a19762b76b1ec316ebdb6e0766539859ff",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/0a88c48262fbee1c3841f721f46439d3de450b95",
+                "reference": "0a88c48262fbee1c3841f721f46439d3de450b95",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
+                "php": ">=5.2.1"
             },
             "require-dev": {
-                "apigen/apigen": "^4.1",
-                "guzzlehttp/guzzle": "^6.3",
-                "phpunit/phpunit": "^7.5"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+                "mockery/mockery": ">=0.7.2",
+                "phpunit/phpunit": "4.5.*"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Twilio\\": "src/Twilio/"
-                }
+                "files": [
+                    "Services/Twilio.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -43,8 +39,12 @@
             ],
             "authors": [
                 {
-                    "name": "Twilio API Team",
-                    "email": "api@twilio.com"
+                    "name": "Kevin Burke",
+                    "email": "kevin@twilio.com"
+                },
+                {
+                    "name": "Kyle Conroy",
+                    "email": "kyle+pear@twilio.com"
                 }
             ],
             "description": "A PHP wrapper for Twilio's API",
@@ -54,7 +54,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2019-09-18T22:10:18+00:00"
+            "time": "2017-11-17T22:59:03+00:00"
         }
     ],
     "packages-dev": [],
