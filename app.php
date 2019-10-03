@@ -17,45 +17,45 @@ if (isset($argc)) {
 		echo "Argument #" . $i . " - " . $argv[$i] . "\n";
 	}
 }
-if ($argc < 2){
-    echo " Usage: Zoe wants you to pick an argument...\n\n";
-    echo $argv[1]."+44number, +44number, ...  \n";
-    // $cli_numbers = false;
-    echo $argv[2]."FILENAME  or \n";
-    // $cli_filename = false;
-    exit();
-}
 
 if($argc<2){
   print_r("Supply more than one argument\n");
   exit();
 } else {
   if($argc==2){
-    print_r("number logic here?");
-  }
-  if ($argc==3){
-    $cli_csv_name=$argv[2];
+    # when argc = only csv file name
+    $cli_csv_name=$argv[1];
     print $cli_csv_name;
-    if (file_exists($cli_csv_name)==FALSE) {
-      echo "Enter a file to be parsed\n";
+    if (file_exists($cli_csv_name)) {
+      echo "\nEnter a file to be parsed\n";
       exit();
     }
     else{
-      this::parse_csv();
+      print("csv file logic here");
+      parse_csv();
     }
   }
+  // if ($argc==3){
+    // print("number logic here");
+    // this::check_numbers();
+
+  // }
 }
 
+
+
 $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
+function check_numbers(){
 $checkNumber = new MobileNumberLookup();
 // if ($argv[1] !== null) {
-if ($cli_numbers !== false) {
+// if ($cli_numbers !== false) {
   $numbers = explode(",",$cli_numbers['phone_number']);
   foreach($numbers as $number){
     print "\n";
     $checkNumber->validate_number($number);
     print "\n";
   }
+// }
 }
 
 function parse_csv(){
