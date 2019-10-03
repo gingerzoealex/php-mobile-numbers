@@ -44,7 +44,6 @@ if($argc<2){
 
 
 
-$pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
 function check_numbers(){
 $checkNumber = new MobileNumberLookup();
 // if ($argv[1] !== null) {
@@ -61,6 +60,7 @@ $checkNumber = new MobileNumberLookup();
 function parse_csv(){
 // if ($cli_csv_name !== null){
 // if ($cli_filename == false){
+  $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
   $files = explode(",", $cli_csv_name['csv']);
   foreach($files as $file){
     print(gettype($file));
