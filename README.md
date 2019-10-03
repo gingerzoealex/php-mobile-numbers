@@ -10,7 +10,7 @@ run `composer install` to get the dependencies.
 
 ## How It Works
 
-To run the app: `php lookup.php --phone_number="+4407904787677","+4402891273002","+44078988776566"`...etc
+To run the app: `php lookup.php --phone_number="+4407904787677","+4402891273002","+44078988776566"`--csv="phone-numbers.csv"`
 This adds numbers so you can check provider & type of number.
 
 
