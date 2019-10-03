@@ -6,18 +6,14 @@ require "lookup.php";
 
 # do argument count
 
-$cli_numbers = getopt(null, ["phone_number:"]);
 $cli_csv_name = getopt(null, ["csv:"]);
+$cli_numbers = getopt(null, ["phone_number:"]);
 
-$cli_filename = true;
-$cli_numbers = true;
-
-if (isset($argc)) {
-	for ($i = 0; $i < $argc; $i++) {
-		echo "Argument #" . $i . " - " . $argv[$i] . "\n";
-	}
-}
-
+// if (isset($argc)) {
+	// for ($i = 0; $i < $argc; $i++) {
+		// echo "Argument #" . $i . " - " . $argv[$i] . "\n";
+	// <!-- } -->
+// }
 if($argc<2){
   print_r("Supply more than one argument\n");
   exit();
@@ -26,25 +22,21 @@ if($argc<2){
     # when argc = only csv file name
     $cli_csv_name=$argv[1];
     print $cli_csv_name;
-    if (file_exists($cli_csv_name)) {
-      echo "\nEnter a file to be parsed\n";
+    if (!file_exists($cli_csv_name)) {
+      echo "\nEnter the arguments: --phone_number\n";
       exit();
-    }
-    else{
+    } else {
       print("csv file logic here");
       parse_csv();
-    }
+    } }
+  else if($argc>2) {
+    print("BIG LIST OF NUMBER SHIT");
+    check_numbers($cli_numbers);
   }
-  // if ($argc==3){
-    // print("number logic here");
-    // this::check_numbers();
-
-  // }
 }
 
 
-
-function check_numbers(){
+function check_numbers($cli_numbers){
 $checkNumber = new MobileNumberLookup();
 // if ($argv[1] !== null) {
 // if ($cli_numbers !== false) {
@@ -84,5 +76,4 @@ function parse_csv(){
   // MobileNumberLookup::create_output_file($all_matches);
 // }
 }
-
 
