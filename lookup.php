@@ -18,38 +18,24 @@ class MobileNumberLookup{
       $number = $client->phone_numbers->get($phone_number, array("CountryCode" => "UK", "Type" => "carrier"));
       // Log the carrier type and name
       $number_type = $number->carrier->type . "\r\n"; // => mobile
+      // print gettype($number_type);
       $carrier =  $number->carrier->name; // => Sprint Spectrum, L.P.
-
       print "Number:\t" . $phone_number . "\nCarrier:\t" . $carrier . "\nType:\t" . $number_type . "\n_______\n";
 
       return true;
     } catch (Exception $e) {
         // If a 404 exception was encountered return false.
+        print "Number not found: ";
+        print "Error: " . $e->getStatus() . " ";
         if($e->getStatus() == 404) {
             return false;
         } else {
-            throw $e;
+            return false;
+            // throw $e;
         }
     }
 
-    if (isValidNumber("19999999999")) {
-        echo "Phone number is valid";
-    } else {
-        echo "Phone number is not valid";
-    }
   }
-}
-
-$checkNumber = new MobileNumberLookup();
-$val = getopt(null, ["phone_number:"]);
-if ($val !== false) {
-  $numbers = explode(",",$val['phone_number']);
-  foreach($numbers as $number){
-    $checkNumber->validate_number($number);
-  }
-}
-else {
-	echo "Could not get value of command line option\n";
 }
 
 ?>
