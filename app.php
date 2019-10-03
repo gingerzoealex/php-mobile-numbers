@@ -9,22 +9,47 @@ require "lookup.php";
 $cli_numbers = getopt(null, ["phone_number:"]);
 $cli_csv_name = getopt(null, ["csv:"]);
 
+$cli_filename = true;
+$cli_numbers = true;
 
 if (isset($argc)) {
 	for ($i = 0; $i < $argc; $i++) {
 		echo "Argument #" . $i . " - " . $argv[$i] . "\n";
 	}
 }
+if ($argc < 2){
+    echo " Usage: Zoe wants you to pick an argument...\n\n";
+    echo $argv[1]."+44number, +44number, ...  \n";
+    // $cli_numbers = false;
+    echo $argv[2]."FILENAME  or \n";
+    // $cli_filename = false;
+    exit();
+}
 
-if((count($argv)) > 1){
-  print_r("More than one argument");
+if($argc<2){
+  print_r("Supply more than one argument\n");
+  exit();
+} else {
+  if($argc==2){
+    print_r("number logic here?");
+  }
+  if ($argc==3){
+    $cli_csv_name=$argv[2];
+    print $cli_csv_name;
+    if (file_exists($cli_csv_name)==FALSE) {
+      echo "Enter a file to be parsed\n";
+      exit();
+    }
+    else{
+      this::parse_csv();
+    }
+  }
 }
 
 $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
-
 $checkNumber = new MobileNumberLookup();
-
-if ($argv[1] !== null) {
+// if ($argv[1] !== null) {
+if ($cli_numbers !== false) {
   $numbers = explode(",",$cli_numbers['phone_number']);
   foreach($numbers as $number){
     print "\n";
@@ -33,7 +58,9 @@ if ($argv[1] !== null) {
   }
 }
 
-if ($cli_csv_name !== null){
+function parse_csv(){
+// if ($cli_csv_name !== null){
+// if ($cli_filename == false){
   $files = explode(",", $cli_csv_name['csv']);
   foreach($files as $file){
     print(gettype($file));
@@ -55,9 +82,7 @@ if ($cli_csv_name !== null){
     }
   }
   // MobileNumberLookup::create_output_file($all_matches);
+// }
 }
 
 
-else{
-  print_r("No file selected.");
-}
