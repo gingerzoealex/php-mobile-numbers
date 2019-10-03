@@ -50,14 +50,11 @@ class MobileNumberLookup{
     fputcsv($file, array('mobile_number', 'carrier', 'type'));
 
     // Sample data. This can be fetched from mysql too
-    $data = array(
-    array($mobile_data),
-    );
+    $data[] = $mobile_data;
 
     // save each row of the data
-    foreach ($data as $row)
-    {
-    fputcsv($file, $row);
+    foreach ($data as $row){
+      fputcsv($file, $row);
     }
 
     // Close the file

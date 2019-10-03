@@ -2,9 +2,7 @@
 
 require "lookup.php";
 
-
 $csv_file = './phone-numbers.csv';
-
 //Open the file.
 $fileHandle = fopen($csv_file, "r");
 
@@ -36,13 +34,13 @@ if ($cli_csv_name !== false){
         foreach($matches[0] as $valid){
           if($valid){
             $str_num = str_replace(' ', '', $valid);
-            // $checkNumber->validate_number($number);
-            MobileNumberLookup::create_output_file($checkNumber->validate_number($number));
+            $all_matches = [$checkNumber->validate_number($number)];
           }
         }
       }
     }
   }
+  MobileNumberLookup::create_output_file($all_matches);
 }
 
 
