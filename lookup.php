@@ -1,15 +1,16 @@
 <?php
-// Get the PHP helper library from twilio.com/docs/php/install
-// Loads the library
-
+# Use for .env file for Twilio auth variables
+use Symfony\Component\Dotenv\Dotenv;
 require "vendor/autoload.php";
 
+$dotenv = new Dotenv();
+$dotenv->loadEnv(__DIR__.'/.env');
 class MobileNumberLookup{
   
   function validate_number($phone_number){
 
-    $sid = "AC6488e8b7bcd7f4ca917791aedd7b86ce";
-    $token = "969ad4307a81385f32add735247bd419";
+    $sid = $_ENV['TWILIO_ACCOUNT_SID'];
+    $token = $_ENV['TWILIO_AUTH_TOKEN'];
 
     try{
       $client = new Lookups_Services_Twilio($sid, $token);
