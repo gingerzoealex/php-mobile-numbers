@@ -2,16 +2,29 @@
 
 require "lookup.php";
 
-$csv_file = './phone-numbers.csv';
 //Open the file.
-$fileHandle = fopen($csv_file, "r");
+
+# do argument count
+
+$cli_numbers = getopt(null, ["phone_number:"]);
+$cli_csv_name = getopt(null, ["csv:"]);
+
+
+if (isset($argc)) {
+	for ($i = 0; $i < $argc; $i++) {
+		echo "Argument #" . $i . " - " . $argv[$i] . "\n";
+	}
+}
+
+if((count($argv)) > 1){
+  print_r("More than one argument");
+}
 
 $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
 
 $checkNumber = new MobileNumberLookup();
 
-$cli_numbers = getopt(null, ["phone_number:"]);
-if ($cli_numbers !== false) {
+if ($argv[1] !== null) {
   $numbers = explode(",",$cli_numbers['phone_number']);
   foreach($numbers as $number){
     print "\n";
@@ -20,12 +33,13 @@ if ($cli_numbers !== false) {
   }
 }
 
-$cli_csv_name = getopt(null, ["csv:"]);
-if ($cli_csv_name !== false){
+if ($cli_csv_name !== null){
   $files = explode(",", $cli_csv_name['csv']);
   foreach($files as $file){
+    print(gettype($file));
     $csv = fopen($file, "r");
     while (($row = fgetcsv($csv, 200, ",")) !== FALSE) {
+      // print_r(gettype($csv));
       # prints the 4th column which is mobile number. could use regex to parse & find the column.
       $data = [$row[3]];
       foreach($data as $number){
@@ -40,7 +54,7 @@ if ($cli_csv_name !== false){
       }
     }
   }
-  MobileNumberLookup::create_output_file($all_matches);
+  // MobileNumberLookup::create_output_file($all_matches);
 }
 
 
