@@ -6,7 +6,7 @@ require "vendor/autoload.php";
 $dotenv = new Dotenv();
 $dotenv->loadEnv(__DIR__.'/.env');
 class MobileNumberLookup{
-  
+
   function validate_number($phone_number){
 
     $sid = $_ENV['TWILIO_ACCOUNT_SID'];
@@ -22,9 +22,11 @@ class MobileNumberLookup{
       // print gettype($number_type);
       $carrier =  $number->carrier->name; // => Sprint Spectrum, L.P.
       print_r ("\nNumber:\t" . $phone_number . "\nCarrier:\t" . $carrier . "\nType:\t" . $number_type . "\n_______\n");
+      $mobile_data = array(
+        array($phone_number, $carrier, $number_type),
+        );
+      return $mobile_data;
 
-
-      return true;
     } catch (Exception $e) {
       // If a 404 exception was encountered return false.
       print "Error: " . $e->getStatus() . "\n";
@@ -42,15 +44,14 @@ class MobileNumberLookup{
     }
   }
 
-  function create_output_file(){
+  function create_output_file($mobile_data){
     // open the file "demosaved.csv" for writing
     $file = fopen('mobile_numbers.csv', 'w');
-    // save the column headers
     fputcsv($file, array('mobile_number', 'carrier', 'type'));
 
     // Sample data. This can be fetched from mysql too
     $data = array(
-    array('Data 11', 'Data 12', 'Data 13'),
+    array($mobile_data),
     );
 
     // save each row of the data
