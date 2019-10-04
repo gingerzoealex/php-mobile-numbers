@@ -8,10 +8,10 @@
  *
  */
 
-# Use for .env file for Twilio auth variables
 use Symfony\Component\Dotenv\Dotenv;
 require "vendor/autoload.php";
 
+# Use for .env file for Twilio auth variables
 $dotenv = new Dotenv();
 $dotenv->loadEnv(__DIR__.'/.env');
 class MobileNumberLookup{
