@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=8 shiftwidth=8 softtabstop=8: */
 /**
  * This is a UK phone number lookup app
@@ -14,16 +15,16 @@ $cli_inputs = $argv;
 if($argc<2){
   print_r("Supply more than one argument\n");
   exit();
+  # closes the program to prompt user to enter valid args
+  # argc is 0 indexed, and the first argument will be app.php.
 } else {
   if($argc==2){
-    # when argc = only csv file name
-    $cli_csv_name = $cli_inputs[1];
-    print $cli_csv_name;
-    if (!file_exists($cli_csv_name)) {
+    $csv_name = $cli_inputs[1];
+    if (!file_exists($csv_name)) {
       echo "\nEnter a valid csv file\n";
       exit();
     } else {
-      parse_csv($cli_csv_name);
+      parse_csv($csv_name);
     }
   }else if($argc>2) {
     check_numbers($cli_inputs[2]);
@@ -34,19 +35,17 @@ if($argc<2){
 function check_numbers($cli_numbers){
   $checkNumber = new MobileNumberLookup();
   $numbers = $cli_numbers;
-  print(gettype($numbers));
-  // foreach($numbers as $number){
     print "\n";
     $lookup = $checkNumber->validate_number($cli_numbers);
     print "\n";
     MobileNumberLookup::create_output_file([$lookup]);
   }
 
-function parse_csv($cli_csv_name){
-  print_r("\n*** CHECKING CSV FILE " . $cli_csv_name . " ***\n");
+function parse_csv($csv_name){
+  print_r("\n*** CHECKING CSV FILE " . $csv_name . " ***\n");
   $checkNumber = new MobileNumberLookup();
   $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
-  $csv = fopen($cli_csv_name, "r");
+  $csv = fopen($csv_name, "r");
   $output = [];
     while (($row = fgetcsv($csv, 200, ",")) !== FALSE) {
       # prints the 4th column which is mobile number. could use regex to parse & find the column.
@@ -61,7 +60,6 @@ function parse_csv($cli_csv_name){
           $id_count++;
           array_push($id, $id_count);
           if($valid){
-            // $str_num = str_replace(' ', '', $valid);
             $number_details = $checkNumber->validate_number($number);
             if($number_details){
                 array_push($output, $number_details);
@@ -70,7 +68,7 @@ function parse_csv($cli_csv_name){
         }
       }
     }
-  print_r($output);
+    print_r($output);
     MobileNumberLookup::create_output_file($output);
 }
 
