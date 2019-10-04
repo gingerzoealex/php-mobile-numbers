@@ -47,6 +47,7 @@ class MobileNumberLookup{
   function create_output_file($mobile_data){
     // open the file "demosaved.csv" for writing
     $file = fopen('mobile_numbers.csv', 'w');
+    print_r("\n\nFile: " .$file);
     fputcsv($file, array('mobile_number', 'carrier', 'type'));
 
     // Sample data. This can be fetched from mysql too
@@ -54,7 +55,9 @@ class MobileNumberLookup{
 
     // save each row of the data
     foreach ($data as $row){
-      fputcsv($file, $row);
+      print_r("\nType : " . gettype($data));
+      // $str_info = implode(",", $data);
+      fputcsv($file, $data);
     }
 
     // Close the file

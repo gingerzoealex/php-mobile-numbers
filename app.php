@@ -29,9 +29,9 @@ function check_numbers($cli_numbers){
   print(gettype($numbers));
   // foreach($numbers as $number){
     print "\n";
-    $checkNumber->validate_number($cli_numbers);
+    $lookup = $checkNumber->validate_number($cli_numbers);
     print "\n";
-  MobileNumberLookup::create_output_file($all_matches);
+  MobileNumberLookup::create_output_file($lookup);
   }
 
 function parse_csv($cli_csv_name){
