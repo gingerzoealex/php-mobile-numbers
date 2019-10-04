@@ -2,63 +2,43 @@
 
 require "lookup.php";
 
-//Open the file.
-
-# do argument count
-
-$cli_csv_name = getopt(null, ["csv:"]);
-$cli_numbers = getopt(null, ["phone_number:"]);
-
-// if (isset($argc)) {
-	// for ($i = 0; $i < $argc; $i++) {
-		// echo "Argument #" . $i . " - " . $argv[$i] . "\n";
-	// <!-- } -->
-// }
+$cli_inputs = $argv;
 if($argc<2){
   print_r("Supply more than one argument\n");
   exit();
 } else {
   if($argc==2){
     # when argc = only csv file name
-    $cli_csv_name=$argv[1];
+    $cli_csv_name = $cli_inputs[1];
     print $cli_csv_name;
     if (!file_exists($cli_csv_name)) {
-      echo "\nEnter the arguments: --phone_number\n";
+      echo "\nEnter a valid csv file\n";
       exit();
     } else {
-      print("csv file logic here");
-      parse_csv();
-    } }
-  else if($argc>2) {
-    print("BIG LIST OF NUMBER SHIT");
-    check_numbers($cli_numbers);
+      parse_csv($cli_csv_name);
+    } 
+  }else if($argc>2) {
+    check_numbers($cli_inputs[2]);
   }
 }
 
 
 function check_numbers($cli_numbers){
-$checkNumber = new MobileNumberLookup();
-// if ($argv[1] !== null) {
-// if ($cli_numbers !== false) {
-  $numbers = explode(",",$cli_numbers['phone_number']);
-  foreach($numbers as $number){
+  $checkNumber = new MobileNumberLookup();
+  $numbers = $cli_numbers;
+  print(gettype($numbers));
+  // foreach($numbers as $number){
     print "\n";
-    $checkNumber->validate_number($number);
+    $checkNumber->validate_number($cli_numbers);
     print "\n";
+  MobileNumberLookup::create_output_file($all_matches);
   }
-// }
-}
 
-function parse_csv(){
-// if ($cli_csv_name !== null){
-// if ($cli_filename == false){
+function parse_csv($cli_csv_name){
+  $checkNumber = new MobileNumberLookup();
   $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
-  $files = explode(",", $cli_csv_name['csv']);
-  foreach($files as $file){
-    print(gettype($file));
-    $csv = fopen($file, "r");
+    $csv = fopen($cli_csv_name, "r");
     while (($row = fgetcsv($csv, 200, ",")) !== FALSE) {
-      // print_r(gettype($csv));
       # prints the 4th column which is mobile number. could use regex to parse & find the column.
       $data = [$row[3]];
       foreach($data as $number){
@@ -72,8 +52,7 @@ function parse_csv(){
         }
       }
     }
-  }
-  // MobileNumberLookup::create_output_file($all_matches);
-// }
+  MobileNumberLookup::create_output_file($all_matches);
 }
+
 
