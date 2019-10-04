@@ -1,4 +1,12 @@
 <?php
+/* vim: set expandtab tabstop=8 shiftwidth=8 softtabstop=8: */
+/**
+ * This is a UK phone number lookup app
+ *
+*  Copyright 2019  Zoe Gadon-thompson
+ * Licensed under the GPLv3, see file LICENSE
+*
+**/
 
 require "lookup.php";
 
@@ -16,7 +24,7 @@ if($argc<2){
       exit();
     } else {
       parse_csv($cli_csv_name);
-    } 
+    }
   }else if($argc>2) {
     check_numbers($cli_inputs[2]);
   }
@@ -31,28 +39,39 @@ function check_numbers($cli_numbers){
     print "\n";
     $lookup = $checkNumber->validate_number($cli_numbers);
     print "\n";
-  MobileNumberLookup::create_output_file($lookup);
+    MobileNumberLookup::create_output_file([$lookup]);
   }
 
 function parse_csv($cli_csv_name){
+  print_r("\n*** CHECKING CSV FILE " . $cli_csv_name . " ***\n");
   $checkNumber = new MobileNumberLookup();
   $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
-    $csv = fopen($cli_csv_name, "r");
+  $csv = fopen($cli_csv_name, "r");
+  $output = [];
     while (($row = fgetcsv($csv, 200, ",")) !== FALSE) {
       # prints the 4th column which is mobile number. could use regex to parse & find the column.
       $data = [$row[3]];
       foreach($data as $number){
         sleep(0.5);
         preg_match_all($pattern,$number,$matches, PREG_PATTERN_ORDER);
+        $id = [];
+        $id_count = 0;
+        $all_matches = [];
         foreach($matches[0] as $valid){
+          $id_count++;
+          array_push($id, $id_count);
           if($valid){
-            $str_num = str_replace(' ', '', $valid);
-            $all_matches = [$checkNumber->validate_number($number)];
+            // $str_num = str_replace(' ', '', $valid);
+            $number_details = $checkNumber->validate_number($number);
+            if($number_details){
+                array_push($output, $number_details);
+            }
           }
         }
       }
     }
-  MobileNumberLookup::create_output_file($all_matches);
+  print_r($output);
+    MobileNumberLookup::create_output_file($output);
 }
 
 
